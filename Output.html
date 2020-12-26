@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://127.0.0.1:5000/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./Output_files/style.css">
+    <script src="./Output_files/jquery.min.js.download"></script>
+  </head>
+  <body>
+    <h1>Flask Chatterbot Example</h1>
+    <h3>A web implementation of <a href="https://github.com/gunthercox/ChatterBot">ChatterBot</a> using Flask.</h3>
+    <div>
+      <div id="chatbox">
+        <p class="botText"><span>Hi! I'm Chatterbot.</span></p>
+      <p class="userText"><span>Hi, I am Rajasree</span></p><p class="botText"><span>What is AI?</span></p><p class="userText"><span>Artificial Intelligence</span></p><p class="botText"><span>nobody pays me. i work for free.</span></p><p class="userText"><span>You are made to make our work easy!</span></p><p class="botText"><span>you are immature</span></p><p class="userText"><span>Why</span></p><p class="botText"><span>Is there a reason that I should?</span></p><p class="userText"><span>Can you help me find the best match for color red</span></p><p class="botText"><span>I seem incapable of feeling pain.</span></p><p class="userText"><span>oh.....</span></p><p class="botText"><span>What is AI?</span></p></div>
+      <div id="userInput">
+        <input id="textInput" type="text" name="msg" placeholder="Message">
+        <input id="buttonInput" type="submit" value="Send">
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+            $("#chatbox").append(botHtml);
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          });
+        }
+        $("#textInput").keypress(function(e) {
+            if ((e.which == 13) && document.getElementById("textInput").value != "" ){
+                getBotResponse();
+            }
+        });
+        $("#buttonInput").click(function() {
+            if (document.getElementById("textInput").value != "") {
+                getBotResponse();
+            }
+        })
+      </script>
+    </div>
+  
+</body></html>
